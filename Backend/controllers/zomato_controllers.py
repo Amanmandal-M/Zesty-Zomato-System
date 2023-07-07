@@ -1,18 +1,17 @@
+import bcrypt
+import jwt
 from flask import request, jsonify
+from models.all_model import userCollection, menuCollection
+from bson import ObjectId, json_util
+from dotenv import dotenv_values
 
-# Menu dictionary containing dish information
-menu = {
-    "1": {"name": "Dhosa", "price": 8.99, "available": True, "quantity": 10},
-    "2": {"name": "Maggie", "price": 12.99, "available": True, "quantity": 8},
-    "3": {"name": "Pizza", "price": 6.99, "available": False, "quantity": 0},
-    "4": {"name": "Noodles", "price": 5.99, "available": True, "quantity": 15}
-}
+
+env_vars = dotenv_values('.env')
+NORMAL_KEY = env_vars['NORMAL_KEY']
+
 
 # List to store orders
 orders = []
-
-# User dictionary containing user information
-users = {}
 
 
 # Controller: User Registration
@@ -24,15 +23,36 @@ def user_registration():
     email = data.get('email')
     password = data.get('password')
 
-    if email in users:
-        return jsonify({"message": "Email already registered. Please login or use a different email."}), 400
-    else:
-        users[email] = {
+    if email == "" or password == "":
+        return jsonify({"message": "Enter all fields"}), 501
+
+    try:
+        isPresent = userCollection.find_one({"email": email})
+        if isPresent:
+            return jsonify({"message": "User already exists"}), 401
+
+        hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+        data = {
             "name": name,
-            "password": password
+            "email": email,
+            "password": hash
         }
-        return jsonify({"message": "Registration successful. You can now log in with your credentials."}), 200
-    
+        result = userCollection.insert_one(data)
+        inserted_id = str(result.inserted_id)  # Convert ObjectId to string
+
+        return jsonify({
+            "message": "User Registered Successfully",
+            "data": {
+                "_id": inserted_id,
+                "name": name,
+                "email": email
+            }
+        }), 201
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
 # Controller: User Login
 # Method: POST
 # Description: Performs user login
@@ -41,17 +61,46 @@ def user_login():
     email = data.get('email')
     password = data.get('password')
 
-    if email in users and users[email]["password"] == password:
-        return jsonify({"message": f"Welcome, {users[email]['name']}!"}), 200
-    else:
-        return jsonify({"message": "Invalid credentials. Access denied."}), 401
+    if email == "" or password == "":
+        return jsonify({"message": "Enter all fields"}), 501
+
+    try:
+        is_present = userCollection.find_one({"email": email})
+        if not is_present:
+            return jsonify({"message": "User not found"}), 401
+        
+        hashed_password = is_present.get('password')
+
+        if bcrypt.checkpw(password.encode(), hashed_password):
+            normal_token = jwt.encode({"masai": "masai"}, NORMAL_KEY, algorithm="HS256")
+
+            # Convert is_present to JSON serializable format
+            is_present_serializable = json_util.dumps(is_present)
+
+            response = jsonify({
+                           "message": "Login successful",
+                           "Token": normal_token,
+                           "Data": json_util.dumps(is_present)
+                       })
+            return response, 201
+        else:
+            return jsonify({"message": "Login failed"}), 404
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
 
 
 # Controller: Display Menu
 # Method: GET
 # Description: Returns the menu
 def display_menu():
-    return jsonify(menu)
+    try:
+        data = list(menuCollection.find())
+        serialized_data = json_util.dumps(data)
+        return serialized_data, 200
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 # Controller: Add Items
@@ -65,14 +114,20 @@ def add_items():
     available = data.get('available')
     quantity = data.get('quantity')
 
-    menu[dish_id] = {
+    item = {
+        "dish_id": dish_id,
         "name": name,
         "price": price,
         "available": available,
         "quantity": quantity
     }
 
-    return 'Dish added successfully'
+    try:
+        menuCollection.insert_one(item)
+        return jsonify({"message": "Dish added successfully"}), 200
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
 
 
 # Controller: Update Items
