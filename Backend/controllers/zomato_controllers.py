@@ -11,6 +11,42 @@ menu = {
 # List to store orders
 orders = []
 
+# User dictionary containing user information
+users = {}
+
+
+# Controller: User Registration
+# Method: POST
+# Description: Registers a new user
+def user_registration():
+    data = request.get_json()
+    name = data.get('name')
+    email = data.get('email')
+    password = data.get('password')
+
+    if email in users:
+        return jsonify({"message": "Email already registered. Please login or use a different email."}), 400
+    else:
+        users[email] = {
+            "name": name,
+            "password": password
+        }
+        return jsonify({"message": "Registration successful. You can now log in with your credentials."}), 200
+    
+# Controller: User Login
+# Method: POST
+# Description: Performs user login
+def user_login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    if email in users and users[email]["password"] == password:
+        return jsonify({"message": f"Welcome, {users[email]['name']}!"}), 200
+    else:
+        return jsonify({"message": "Invalid credentials. Access denied."}), 401
+
+
 # Controller: Display Menu
 # Method: GET
 # Description: Returns the menu

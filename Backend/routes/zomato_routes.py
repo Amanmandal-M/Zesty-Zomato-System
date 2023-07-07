@@ -2,13 +2,23 @@ from flask import Blueprint, render_template, request
 
 # Import the required controllers
 from controllers.zomato_controllers import (
-    display_menu, take_order, add_items, update_items, delete_items, all_orders, review_orders
+    display_menu, take_order, add_items, update_items, delete_items, all_orders, review_orders ,user_registration , user_login
 )
 
 # Create a Blueprint for the Zomato routes
 zomato_router = Blueprint('zomato', __name__)
 
 # Routes with comments
+
+# Route: Display Menu
+# Method: GET
+# Description: Displays the menu
+zomato_router.route('/register', methods=['POST'])(user_registration)
+
+# Route: Display Menu
+# Method: GET
+# Description: Displays the menu
+zomato_router.route('/login', methods=['POST'])(user_login)
 
 # Route: Display Menu
 # Method: GET
