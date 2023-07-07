@@ -1,10 +1,14 @@
 from flask import Flask
+from flask_cors import CORS
 import os
 
 from routes.zomato_routes import zomato_router
 
 
 app = Flask(__name__)
+
+# Enable CORS for all routes
+CORS(app)
 
 # Default routes
 @app.route('/')
