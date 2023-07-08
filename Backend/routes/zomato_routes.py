@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint
 
 # Import the required controllers
 from controllers.zomato_controllers import (
