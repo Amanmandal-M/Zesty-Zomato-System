@@ -3,11 +3,11 @@ from dotenv import dotenv_values
 
 env_vars = dotenv_values('.env')
 
-MONGO_URL = env_vars.get('MONGO_URL')
+Mongo_link = env_vars.get('MONGO_URL')
 
 # Establish connection to MongoDB
-client = MongoClient(MONGO_URL)
-db = client['zomatoDB']
+client = MongoClient(Mongo_link)
+db = client['ZomatoDB']
 
 # Export the database connection
 dbConnection = db

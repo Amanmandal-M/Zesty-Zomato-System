@@ -5,9 +5,8 @@ from models.all_model import userCollection, menuCollection
 from bson import ObjectId, json_util
 from dotenv import dotenv_values
 
-
 env_vars = dotenv_values('.env')
-NORMAL_KEY = env_vars['NORMAL_KEY']
+Normal_Key = env_vars.get('NORMAL_KEY')
 
 
 # List to store orders
@@ -72,7 +71,7 @@ def user_login():
         hashed_password = is_present.get('password')
 
         if bcrypt.checkpw(password.encode(), hashed_password):
-            normal_token = jwt.encode({"masai": "masai"}, NORMAL_KEY, algorithm="HS256")
+            normal_token = jwt.encode({"masai": "masai"}, Normal_Key, algorithm="HS256")
 
             # Convert is_present to JSON serializable format
             is_present_serializable = json_util.dumps(is_present)
