@@ -1,5 +1,5 @@
 import os
-from flask import Flask , render_template
+from flask import Flask
 from flask_cors import CORS
 from configs.db import dbConnection
 from routes.zomato_routes import zomato_router
@@ -13,7 +13,7 @@ CORS(app)
 # Default routes
 @app.route('/')
 def default_routes():
-    return render_template('index.html')
+    return '<h1 style="color:blue;text-align:center">Welcome in Zomato Backend!</h1>'
     
 
 # Register the routes blueprint
