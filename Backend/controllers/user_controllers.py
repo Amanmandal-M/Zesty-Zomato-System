@@ -1,3 +1,4 @@
+import os
 import bcrypt
 import jwt
 from flask import request, jsonify
@@ -5,8 +6,7 @@ from models.all_model import userCollection
 from bson import ObjectId, json_util
 from dotenv import dotenv_values
 
-env_vars = dotenv_values('.env')
-Normal_Key = env_vars.get('NORMAL_KEY')
+Normal_Key = os.getenv('NORMAL_KEY')
 
 
 # Controller: User Registration

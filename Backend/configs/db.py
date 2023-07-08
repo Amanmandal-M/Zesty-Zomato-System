@@ -1,9 +1,8 @@
+import os
 from pymongo import MongoClient
 from dotenv import dotenv_values
 
-env_vars = dotenv_values('.env')
-
-Mongo_link = env_vars.get('MONGO_URL')
+Mongo_link = os.getenv("MONGO_URI")
 
 # Establish connection to MongoDB
 client = MongoClient(Mongo_link)
