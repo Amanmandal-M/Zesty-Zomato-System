@@ -31,9 +31,4 @@ app.register_blueprint(order_router, url_prefix='/order')
 
 
 if __name__ == '__main__':
-    # Get host and port from environment variables or use default values
-    host = os.getenv('HOST', '0.0.0.0')
-    port = int(os.getenv('PORT', 8080))
-
-    # Run the Flask application
-    app.run(host=host, port=port)
+    app.run()
