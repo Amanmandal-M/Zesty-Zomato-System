@@ -7,8 +7,7 @@ MONGO_URL = env_vars.get('MONGO_URL')
 
 # Establish connection to MongoDB
 client = MongoClient(MONGO_URL)
-db = client.get_default_database()
+db = client['zomatoDB']
 
 # Export the database connection
 dbConnection = db
-
