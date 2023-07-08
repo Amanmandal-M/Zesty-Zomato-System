@@ -1,8 +1,12 @@
 import os
 from flask import Flask
 from flask_cors import CORS
-from routes.zomato_routes import zomato_router
 from dotenv import dotenv_values
+
+# All routes imported 
+from routes.menu_routes import menu_router
+from routes.user_routes import user_router
+from routes.order_routes import order_router
 
 env_vars = dotenv_values('.env')
 
@@ -20,9 +24,16 @@ def default_routes():
     
 
 # Register the routes blueprint
-app.register_blueprint(zomato_router, url_prefix='/zomato')
+app.register_blueprint(user_router, url_prefix='/user')
+app.register_blueprint(menu_router, url_prefix='/menu-list')
+app.register_blueprint(order_router, url_prefix='/order')
+
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", port_no))
-    app.run(host='0.0.0.0' , port=port)
+    # Get host and port from environment variables or use default values
+    host = os.getenv('HOST', '0.0.0.0')
+    port = int(os.getenv('PORT', 8080))
+
+    # Run the Flask application
+    app.run(host=host, port=port)
