@@ -25,4 +25,4 @@ app.register_blueprint(zomato_router, url_prefix='/zomato')
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", port_no))
-    app.run(port=port)
+    app.run(host='0.0.0.0' , port=port)
