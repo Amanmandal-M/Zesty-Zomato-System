@@ -12,7 +12,7 @@ def display_menu():
     try:
         data = list(menuCollection.find())
         serialized_data = json_util.dumps(data)  # Convert MongoDB documents to JSON
-        return jsonify(serialized_data), 200
+        return json_util(serialized_data), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
