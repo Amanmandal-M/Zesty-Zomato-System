@@ -45,7 +45,7 @@ def all_orders():
     try:
         orders = list(orderCollection.find())
         serialized_orders = json_util.dumps(orders)
-        return serialized_orders, 200
+        return jsonify(serialized_orders), 200
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
