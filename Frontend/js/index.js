@@ -71,7 +71,7 @@ const signupSection = async () => {
   };
 
   if (obj.email == "" || obj.password == "" || obj.name == "")
-    Swal.fire({
+    return Swal.fire({
       icon: "warning",
       text: "Please Enter fields",
       width: "22%",
@@ -139,7 +139,7 @@ const loginSection = async () => {
   };
 
   if (obj.email == "" || obj.password == "")
-    Swal.fire({
+    return Swal.fire({
       icon: "warning",
       text: "Please Enter fields",
       width: "22%",
@@ -156,6 +156,8 @@ const loginSection = async () => {
     });
     const apiResponse = await fetchingUrl.json();
     const data = JSON.parse(apiResponse.Data);
+
+    sessionStorage.setItem("Token", apiResponse.Token);
 
     if (fetchingUrl.status == 201) {
       Swal.fire({
