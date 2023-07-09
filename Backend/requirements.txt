@@ -1,8 +1,10 @@
-Flask==1.1.4
+Flask==2.1.0
 flask-cors==3.0.10
 Jinja2==3.0.1
 Werkzeug==2.0.1
 python-dotenv==0.19.1
-pymongo==3.12.0
+pymongo==4.0.1
 bcrypt==3.2.0
 PyJWT==2.1.0
+requests==2.25.1
+pytest==6.2.4
