@@ -2,11 +2,10 @@ import os
 from flask import Flask
 from flask_cors import CORS
 
-# All routes imported 
+# All routes imported
 from routes.menu_routes import menu_router
 from routes.user_routes import user_router
 from routes.order_routes import order_router
-from middleware.authorization_middleware import check_token_middleware
 
 
 app = Flask(__name__)
@@ -19,14 +18,11 @@ CORS(app)
 # Default routes
 @app.route('/')
 def default_routes():
-    return '<h1 style="color:blue;text-align:center">Welcome in Zomato Backend!</h1>'
+    return '<h1 style="color:blue;text-align:center">Welcome to Zomato Backend!</h1>'
 
 # Register the routes blueprint
 app.register_blueprint(user_router, url_prefix='/user')
 app.register_blueprint(menu_router, url_prefix='/menu-list')
-
-# Apply middleware only to order_router
-order_router.before_request(check_token_middleware)
 app.register_blueprint(order_router, url_prefix='/order')
 
 
