@@ -91,7 +91,7 @@ function displayMenu(menuItems) {
 }
 
 async function addToOrder(dishId) {
-  if(!token) return showAlert("error", "First Login");
+  if(!token) return showAlert("error", "Login First");
   try {
     const response = await fetch(takeOrderUrl, {
       method: "POST",
