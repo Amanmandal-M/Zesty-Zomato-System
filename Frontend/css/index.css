@@ -79,12 +79,13 @@ body {
     width: 20%;
     text-align: center;
     padding: 10px;
+    margin: auto;
 }
 
 .menu-item-container span:nth-child(1){
     font-size: 18px;
     text-align: start;
-    width: 50%;
+    width: 60%;
     font-weight: bolder;
     margin-top: 5px;
 }
@@ -92,6 +93,7 @@ body {
 .menu-item-container span:nth-child(2){
     font-weight:600;
     color: grey;
+    width: 100%;
 }
 
 .menu-item-container p{
