@@ -22,6 +22,7 @@ if (user_name) {
   namesContainer.style.backgroundColor = "#4caf50";
   logOutContainer.textContent = "Log out";
   logOutContainer.style.backgroundColor = "#4caf50";
+  showAlert('success',`Welcome ${user_name}`)
 }
 
 function userLogin() {
