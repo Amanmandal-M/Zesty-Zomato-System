@@ -84,7 +84,7 @@ function displayMenu(menuItems) {
       }</span></p>
       <button class="orderButton" onclick="addToOrder('${
         menuItem._id.$oid
-      }')">Add to Order</button>
+      }')">Order Now</button>
     `;
     menuContainer.appendChild(menuItemElement);
   });
