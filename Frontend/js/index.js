@@ -28,6 +28,10 @@ function userLogin() {
   window.location.href = "./html/userReg.html";
 }
 
+function adminLogin() {
+  window.location.href="./html/adminDashboard.html";
+}
+
 logOutContainer.addEventListener("click", (e) => {
   sessionStorage.removeItem("Token");
   sessionStorage.removeItem("Name");
@@ -37,9 +41,7 @@ logOutContainer.addEventListener("click", (e) => {
   window.location.reload();
 });
 
-function adminLogin() {
-  alert("Work in progress");
-}
+
 
 document.addEventListener("DOMContentLoaded", () => {
   // Fetch menu items
