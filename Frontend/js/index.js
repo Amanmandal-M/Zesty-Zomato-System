@@ -60,7 +60,14 @@ function emptyAllFields() {
 // SignUp Button Event Listener
 signUpBtn.addEventListener("click", async (e) => {
   e.preventDefault();
-  signupSection();
+  return signupSection();
+});
+
+signUpBtn.addEventListener("keydown", async (event) => {
+  if (event.keyCode === 13) {
+    e.preventDefault();
+    return signupSection();
+  }
 });
 
 const signupSection = async () => {
@@ -129,7 +136,14 @@ const signupSection = async () => {
 // Login Button Event Listener
 loginBtn.addEventListener("click", async (e) => {
   e.preventDefault();
-  loginSection();
+  return loginSection();
+});
+
+loginBtn.addEventListener("keydown", async (event) => {
+    if(event.keyCode === 13){
+        e.preventDefault();
+        return loginSection();
+    }
 });
 
 const loginSection = async () => {
