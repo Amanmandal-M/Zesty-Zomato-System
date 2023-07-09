@@ -23,6 +23,7 @@ def display_menu():
 # Description: Adds items to the menu
 def add_items():
     data = request.get_json()
+    image_url = data.get('imageUrl')
     dish_id = data.get('dish_id')
     name = data.get('name')
     price = data.get('price')
@@ -30,6 +31,7 @@ def add_items():
     quantity = data.get('quantity')
 
     item = {
+        "imageUrl":image_url,
         "dish_id": dish_id,
         "name": name,
         "price": price,
