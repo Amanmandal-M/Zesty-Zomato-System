@@ -1,5 +1,5 @@
 const baseUrl = `https://zomato-backend-python.onrender.com`;
-const defaultUrl = `${baseUrl}/zomato`;
+const defaultUrl = `${baseUrl}/user`;
 const registerUrl = `${defaultUrl}/register`;
 const loginUrl = `${defaultUrl}/login`;
 
