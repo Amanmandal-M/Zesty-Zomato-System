@@ -37,6 +37,11 @@ const hideSpinner2 = () => {
   loginBtn.textContent = "Login";
 };
 
+
+function zestyHeaderClick(){
+  window.location.href="../index.html";
+}
+
 signUpLink.addEventListener("click", () => {
   wrapper.classList.add("animate-signIn");
   wrapper.classList.remove("animate-signUp");
@@ -206,3 +211,4 @@ const loginSection = async () => {
   hideSpinner2();
   emptyAllFields();
 };
+
