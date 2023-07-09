@@ -1,203 +1,146 @@
 const baseUrl = `https://zomato-backend-python.onrender.com`;
-const defaultUrl = `${baseUrl}/user`;
-const registerUrl = `${defaultUrl}/register`;
-const loginUrl = `${defaultUrl}/login`;
 
-const wrapper = document.querySelector(".wrapper");
-const signUpLink = document.querySelector(".signUp-link");
-const signInLink = document.querySelector(".signIn-link");
+const menuUrl = `${baseUrl}/menu-list/`;
 
-// Buttons
-const signUpBtn = document.querySelector("#btnSignUp");
-const loginBtn = document.querySelector("#btnLogin");
+// Protected Routes
+const orderUrl = `${baseUrl}/order/`;
+const takeOrderUrl = `${orderUrl}take-order`;
 
-// Input Fields
-const signname = document.querySelector(".signupName");
-const signEmail = document.querySelector(".signupEmail");
-const signPass = document.querySelector(".signupPass");
-const loginEmail = document.querySelector(".loginEmail");
-const loginPass = document.querySelector(".loginPass");
+// Session Storage items
+const token = sessionStorage.getItem("Token");
+const user_name = sessionStorage.getItem("Name");
 
-// Spinner icon
-const showSpinner = () => {
-  signUpBtn.innerHTML = "";
-  signUpBtn.innerHTML = `<div class="spinner"></div>`;
-};
-const showSpinner2 = () => {
-  loginBtn.innerHTML = "";
-  loginBtn.innerHTML = `<div class="spinner"></div>`;
-};
+// Buttons and names container
+const nameContainer = document.getElementById("nameSpace");
+const logOutContainer = document.getElementById("logout");
+const namesContainer = document.getElementById("names");
+const orderHeader = document.getElementById("orderHeader");
 
-const hideSpinner = () => {
-  signUpBtn.innerHTML = "";
-  signUpBtn.textContent = "Sign Up";
-};
-const hideSpinner2 = () => {
-  loginBtn.innerHTML = "";
-  loginBtn.textContent = "Login";
-};
-
-signUpLink.addEventListener("click", () => {
-  wrapper.classList.add("animate-signIn");
-  wrapper.classList.remove("animate-signUp");
-});
-
-signInLink.addEventListener("click", () => {
-  wrapper.classList.add("animate-signUp");
-  wrapper.classList.remove("animate-signIn");
-});
-
-// Empty all fields
-
-function emptyAllFields() {
-  signname.value = "";
-  signEmail.value = "";
-  signPass.value = "";
-  loginEmail.value = "";
-  loginPass.value = "";
+if (user_name) {
+  nameContainer.remove();
+  namesContainer.textContent = user_name;
+  namesContainer.style.backgroundColor = "#4caf50";
+  logOutContainer.textContent = "Log out";
+  logOutContainer.style.backgroundColor = "#4caf50";
 }
 
-// SignUp Button Event Listener
-signUpBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  return signupSection();
+function userLogin() {
+  window.location.href = "./html/userReg.html";
+}
+
+logOutContainer.addEventListener("click", (e) => {
+  sessionStorage.removeItem("Token");
+  sessionStorage.removeItem("Name");
+  logOutContainer.textContent = "";
+  logOutContainer.style.backgroundColor = "transparent";
+  nameContainer.textContent = "User Login";
+  window.location.reload();
 });
 
-signUpBtn.addEventListener("keydown", async (event) => {
-  if (event.keyCode === 13) {
-    e.preventDefault();
-    return signupSection();
+function adminLogin() {
+  alert("Work in progress");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Fetch menu items
+  fetchMenu();
+
+  // Fetch orders
+  if (token) {
+    orderHeader.textContent = "Orders";
+    fetchOrders();
   }
 });
 
-const signupSection = async () => {
-  let obj = {
-    name: signname.value,
-    email: signEmail.value,
-    password: signPass.value,
-  };
-
-  if (obj.email == "" || obj.password == "" || obj.name == "")
-    return Swal.fire({
-      icon: "warning",
-      text: "Please Enter fields",
-      width: "22%",
-    });
-
+async function fetchMenu() {
   try {
-    showSpinner();
-    const fetchingUrl = await fetch(registerUrl, {
+    const response = await fetch(menuUrl);
+    const menuItems = await response.json();
+    displayMenu(JSON.parse(menuItems));
+  } catch (error) {
+    showAlert("error", "HTTP ERROR");
+  }
+}
+
+function displayMenu(menuItems) {
+  const menuContainer = document.getElementById("menu-container");
+  menuContainer.innerHTML = "";
+  menuItems.forEach((menuItem) => {
+    const menuItemElement = document.createElement("div");
+    menuItemElement.className = "menu-item-container";
+    menuItemElement.innerHTML = `
+      <img class="dishImg" src=${menuItem.imageUrl} alt="Img Not Found"/>
+      <p class="dishName"><span>Dish:</span>&nbsp&nbsp<span>${
+        menuItem.name
+      }</span></p>
+      <p class="price"><span>Price:</span>&nbsp&nbsp<span>${menuItem.price}</span></p>
+      <p class="availabile"><span>Available:</span>&nbsp&nbsp<span>${
+        menuItem.available ? "Yes" : "No"
+      }</span></p>
+      <p class="quantity"><span>Quantity:</span>&nbsp&nbsp<span>${
+        menuItem.quantity
+      }</span></p>
+      <button class="orderButton" onclick="addToOrder('${
+        menuItem._id.$oid
+      }')">Add to Order</button>
+    `;
+    menuContainer.appendChild(menuItemElement);
+  });
+}
+
+async function addToOrder(dishId) {
+  try {
+    const response = await fetch(takeOrderUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(obj),
+      body: JSON.stringify({
+        customer_name: user_name,
+        order_items: [dishId],
+      }),
     });
-    const apiResponse = await fetchingUrl.json();
-
-    if (fetchingUrl.status == 201) {
-      Swal.fire({
-        icon: "success",
-        text: `Registered Successfully`,
-        width: "22%",
-        didClose: () => {
-          wrapper.classList.add("animate-signUp");
-          wrapper.classList.remove("animate-signIn");
-        },
-      });
-    } else if (fetchingUrl.status == 401) {
-      Swal.fire({
-        icon: "warning",
-        text: "Already a member",
-        width: "22%",
-        didClose: () => {
-          wrapper.classList.add("animate-signUp");
-          wrapper.classList.remove("animate-signIn");
-        },
-      });
-    } else {
-      Swal.fire({
-        icon: "error",
-        text: "Credentials Not Found",
-        width: "22%",
-      });
-    }
+    const result = await response.json();
+    fetchMenu();
+    showAlert("success", "Order placed successfully!");
   } catch (error) {
-    Swal.fire({
-      icon: "error",
-      text: "Sign Up Failed",
-      width: "22%",
-    });
+    showAlert("error", "Error placing order!");
   }
-  hideSpinner();
-  emptyAllFields();
-};
+}
 
-// Login Button Event Listener
-loginBtn.addEventListener("click", async (e) => {
-  e.preventDefault();
-  return loginSection();
-});
-
-loginBtn.addEventListener("keydown", async (event) => {
-    if(event.keyCode === 13){
-        e.preventDefault();
-        return loginSection();
-    }
-});
-
-const loginSection = async () => {
-  let obj = {
-    email: loginEmail.value,
-    password: loginPass.value,
-  };
-
-  if (obj.email == "" || obj.password == "")
-    return Swal.fire({
-      icon: "warning",
-      text: "Please Enter fields",
-      width: "22%",
-    });
-
+async function fetchOrders() {
   try {
-    showSpinner2();
-    const fetchingUrl = await fetch(loginUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(obj),
-    });
-    const apiResponse = await fetchingUrl.json();
-    const data = JSON.parse(apiResponse.Data);
-
-    sessionStorage.setItem("Token", apiResponse.Token);
-
-    if (fetchingUrl.status == 201) {
-      Swal.fire({
-        icon: "success",
-        text: `Welcome ${data.name}`,
-        width: "22%",
-      });
-    } else if (fetchingUrl.status == 401) {
-      Swal.fire({
-        icon: "warning",
-        text: "Please Sign up first",
-        width: "22%",
-        didClose: () => {
-          wrapper.classList.add("animate-signIn");
-          wrapper.classList.remove("animate-signUp");
-        },
-      });
-    }
+    const response = await fetch(orderUrl);
+    const orders = await response.json();
+    displayOrders(JSON.parse(orders));
   } catch (error) {
-    Swal.fire({
-      icon: "error",
-      text: "Login Failed",
-      width: "22%",
-    });
+    console.log("Error fetching orders:", error);
   }
+}
 
-  hideSpinner2();
-  emptyAllFields();
-};
+function displayOrders(orders) {
+  const orderContainer = document.getElementById("order-container");
+  orderContainer.innerHTML = "";
+  orders.forEach((order) => {
+    const orderElement = document.createElement("div");
+    orderElement.innerHTML = `
+      <p>Order ID: ${order._id.$oid}</p>
+      <p>Customer: ${order.customer_name}</p>
+      <p>Dish: ${order.dish_id}</p>
+      <p>Status: ${order.status}</p>
+    `;
+    orderContainer.appendChild(orderElement);
+  });
+}
+
+function showAlert(type, message) {
+  swal.fire({
+    title: type === "success" ? "Success" : "Error",
+    text: message,
+    icon: type,
+    button: "OK",
+    didClose: () => {
+        fetchOrders() 
+    }
+  });
+}
