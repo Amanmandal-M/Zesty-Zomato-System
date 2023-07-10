@@ -31,7 +31,7 @@ function userLogin() {
 }
 
 function adminLogin() {
-  window.location.href="./html/adminDashboard.html";
+  window.location.href = "./html/adminDashboard.html";
 }
 
 logOutContainer.addEventListener("click", (e) => {
@@ -42,8 +42,6 @@ logOutContainer.addEventListener("click", (e) => {
   nameContainer.textContent = "User Login";
   window.location.reload();
 });
-
-
 
 document.addEventListener("DOMContentLoaded", () => {
   // Fetch menu items
@@ -77,7 +75,9 @@ function displayMenu(menuItems) {
       <p class="dishName"><span>Dish:</span>&nbsp&nbsp<span>${
         menuItem.name
       }</span></p>
-      <p class="price"><span>Price:</span>&nbsp&nbsp<span>${menuItem.price}</span></p>
+      <p class="price"><span>Price:</span>&nbsp&nbsp<span>${
+        menuItem.price
+      }</span></p>
       <p class="availabile"><span>Available:</span>&nbsp&nbsp<span>${
         menuItem.available ? "Yes" : "No"
       }</span></p>
@@ -93,7 +93,14 @@ function displayMenu(menuItems) {
 }
 
 async function addToOrder(dishId) {
-  if(!token) return showAlert("error", "Login First");
+  if (!token)
+    return swal.fire({
+      title: "Login First",
+      icon: "warning",
+      didClose: () => {
+        window.location.href = "./html/userReg.html";
+      },
+    });
   try {
     const response = await fetch(takeOrderUrl, {
       method: "POST",
@@ -145,7 +152,7 @@ function showAlert(type, message) {
     icon: type,
     button: "OK",
     didClose: () => {
-        fetchOrders() 
-    }
+      fetchOrders();
+    },
   });
 }
