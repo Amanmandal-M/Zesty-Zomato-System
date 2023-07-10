@@ -41,7 +41,7 @@ def add_items():
 
     try:
         menuCollection.insert_one(item)
-        return jsonify({"message": "Dish added successfully"}), 200
+        return jsonify({"message": "Dish added successfully"}), 201
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
@@ -54,7 +54,7 @@ def update_items(dish_id):
 
     try:
         menuCollection.update_one({"_id": ObjectId(dish_id)}, {"$set": data})
-        return jsonify({"message": "Dish updated successfully"}), 200
+        return jsonify({"message": "Dish updated successfully"}), 204
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
@@ -65,6 +65,6 @@ def update_items(dish_id):
 def delete_items(dish_id):
     try:
         menuCollection.delete_one({"_id": ObjectId(dish_id)})
-        return jsonify({"message": "Dish deleted successfully"}), 200
+        return jsonify({"message": "Dish deleted successfully"}), 202
     except Exception as e:
         return jsonify({"message": str(e)}), 500
