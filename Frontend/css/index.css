@@ -119,3 +119,25 @@ body {
     color: white;
     border-radius: 10px;
 }
+
+.loader {
+    display: none;
+    border: 14px solid #02ff02;
+    border-top: 14px solid  #0097fc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 0.7s linear infinite;
+    margin: auto;
+    top: calc(50% - 40px);
+    left: calc(50% - 40px);
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

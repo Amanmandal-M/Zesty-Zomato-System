@@ -2,6 +2,6 @@ function userLogin() {
   window.location.href = "../html/userReg.html";
 }
 
-function adminLogin() {
-  window.location.href = "../html/adminDashboard.html";
+function home() {
+  window.location.href = "../index.html";
 }

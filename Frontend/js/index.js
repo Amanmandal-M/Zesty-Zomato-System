@@ -15,6 +15,8 @@ const nameContainer = document.getElementById("nameSpace");
 const logOutContainer = document.getElementById("logout");
 const namesContainer = document.getElementById("names");
 const orderHeader = document.getElementById("orderHeader");
+const menuContainer = document.getElementById("menu-container");
+const loader = document.getElementById("loader");
 
 if (user_name) {
   nameContainer.remove();
@@ -22,7 +24,6 @@ if (user_name) {
   namesContainer.style.backgroundColor = "#4caf50";
   logOutContainer.textContent = "Log out";
   logOutContainer.style.backgroundColor = "#4caf50";
-  showAlert('success',`Welcome ${user_name}`)
 }
 
 function userLogin() {
@@ -46,6 +47,7 @@ logOutContainer.addEventListener("click", (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   // Fetch menu items
+  loader.style.display = "block";
   fetchMenu();
 
   // Fetch orders
@@ -66,7 +68,6 @@ async function fetchMenu() {
 }
 
 function displayMenu(menuItems) {
-  const menuContainer = document.getElementById("menu-container");
   menuContainer.innerHTML = "";
   menuItems.forEach((menuItem) => {
     const menuItemElement = document.createElement("div");
@@ -108,7 +109,7 @@ async function addToOrder(dishId) {
     fetchMenu();
     showAlert("success", "Order placed successfully!");
   } catch (error) {
-    showAlert("error", "Error placing order!");
+    showAlert("error", "HTTP ERROR");
   }
 }
 
@@ -118,7 +119,7 @@ async function fetchOrders() {
     const orders = await response.json();
     displayOrders(JSON.parse(orders));
   } catch (error) {
-    console.log("Error fetching orders:", error);
+    showAlert("error", "HTTP ERROR");
   }
 }
 
