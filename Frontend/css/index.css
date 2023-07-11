@@ -141,3 +141,14 @@ body {
       transform: rotate(360deg);
     }
   }
+
+.loader2{
+    display: none;
+    margin: auto;
+    text-align: center;
+    width: 30%;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #423f52;
+}

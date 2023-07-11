@@ -17,6 +17,7 @@ const namesContainer = document.getElementById("names");
 const orderHeader = document.getElementById("orderHeader");
 const menuContainer = document.getElementById("menu-container");
 const loader = document.getElementById("loader");
+const loader2 = document.getElementById("loader2");
 
 if (user_name) {
   nameContainer.remove();
@@ -46,6 +47,9 @@ logOutContainer.addEventListener("click", (e) => {
 document.addEventListener("DOMContentLoaded", () => {
   // Fetch menu items
   loader.style.display = "block";
+  loader2.style.display = "block";
+
+
   fetchMenu();
 
   // Fetch orders
@@ -59,6 +63,7 @@ async function fetchMenu() {
   try {
     const response = await fetch(menuUrl);
     const menuItems = await response.json();
+    loader2.style.display = "none"
     displayMenu(JSON.parse(menuItems));
   } catch (error) {
     showAlert("error", "HTTP ERROR");
@@ -145,6 +150,7 @@ function displayOrders(orders) {
   });
 }
 
+// Showing Alert
 function showAlert(type, message) {
   swal.fire({
     title: type === "success" ? "Success" : "Error",
