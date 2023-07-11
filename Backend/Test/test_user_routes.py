@@ -3,8 +3,8 @@ import json
 def test_user_registration(client):
     data = {
         "name": "Aman Kumar",
-        "email": "aman359@example.com",
-        "password": "aman123"
+        "email": "aman34787@example.com",
+        "password": "zomato"
     }
     response = client.post('/user/register', json=data)
     assert response.status_code == 201
@@ -14,8 +14,8 @@ def test_user_registration(client):
 
 def test_user_login(client):
     data = {
-        "email": "aman359@example.com",
-        "password": "aman123"
+        "email": "aman34787@example.com",
+        "password": "zomato"
     }
     response = client.post('/user/login', json=data)
     assert response.status_code == 201
