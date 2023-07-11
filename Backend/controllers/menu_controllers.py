@@ -1,13 +1,14 @@
 from flask import request, jsonify
-from models.all_model import menuCollection , orderCollection
+from models.all_model import menuCollection, menu_schema, validate_data
 from bson import ObjectId, json_util
 from dotenv import dotenv_values
+
 env_vars = dotenv_values('.env')
 
 
 # Controller: Display Items
 # Method: GET
-# Description: Display items to the menu
+# Description: Display items in the menu
 def display_menu():
     try:
         data = list(menuCollection.find())
@@ -23,24 +24,13 @@ def display_menu():
 # Description: Adds items to the menu
 def add_items():
     data = request.get_json()
-    image_url = data.get('imageUrl')
-    dish_id = data.get('dish_id')
-    name = data.get('name')
-    price = data.get('price')
-    available = data.get('available')
-    quantity = data.get('quantity')
-
-    item = {
-        "imageUrl":image_url,
-        "dish_id": dish_id,
-        "name": name,
-        "price": price,
-        "available": available,
-        "quantity": quantity
-    }
-
     try:
-        menuCollection.insert_one(item)
+        # Validate data against menu schema
+        valid = validate_data(data, menu_schema)
+        if not valid:
+            return jsonify({"message": "Data validation failed"}), 400
+
+        menuCollection.insert_one(data)
         return jsonify({"message": "Dish added successfully"}), 201
     except Exception as e:
         return jsonify({"message": str(e)}), 500

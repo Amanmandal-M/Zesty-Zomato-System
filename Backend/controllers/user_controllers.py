@@ -2,12 +2,11 @@ import os
 import bcrypt
 import jwt
 from flask import request, jsonify
-from models.all_model import userCollection
+from models.all_model import userCollection, user_schema, validate_data
 from bson import ObjectId, json_util
 from dotenv import dotenv_values
 
 Normal_Key = os.getenv('NORMAL_KEY')
-
 
 # Controller: User Registration
 # Method: POST
@@ -22,11 +21,16 @@ def user_registration():
         return jsonify({"message": "Enter all fields"}), 501
 
     try:
+        # Validate user data against user schema
+        valid = validate_data(data, user_schema)
+        if not valid:
+            return jsonify({"message": "Data validation failed"}), 400
+
         isPresent = userCollection.find_one({"email": email})
         if isPresent:
             return jsonify({"message": "User already exists"}), 401
 
-        hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt(5))
 
         data = {
             "name": name,
