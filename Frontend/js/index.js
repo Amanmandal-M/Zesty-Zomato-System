@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Fetch orders
   if (token) {
-    orderHeader.textContent = "Orders";
-    fetchOrders();
+    // orderHeader.textContent = "Orders";
+    // fetchOrders();
   }
 });
 
