@@ -49,13 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
   loader.style.display = "block";
   loader2.style.display = "block";
 
-
   fetchMenu();
 
   // Fetch orders
   if (token) {
-    // orderHeader.textContent = "Orders";
-    // fetchOrders();
+    orderHeader.textContent = "Orders";
+    fetchOrders();
   }
 });
 
@@ -63,7 +62,7 @@ async function fetchMenu() {
   try {
     const response = await fetch(menuUrl);
     const menuItems = await response.json();
-    loader2.style.display = "none"
+    loader2.style.display = "none";
     displayMenu(JSON.parse(menuItems));
   } catch (error) {
     showAlert("error", "HTTP ERROR");
@@ -113,7 +112,7 @@ async function addToOrder(dishId) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        customer_name: user_name,
+        user_id:sessionStorage.getItem('UserID'),
         order_items: [dishId],
       }),
     });
@@ -140,11 +139,14 @@ function displayOrders(orders) {
   orderContainer.innerHTML = "";
   orders.forEach((order) => {
     const orderElement = document.createElement("div");
+    orderElement.className = "order-item-container";
     orderElement.innerHTML = `
-      <p>Order ID: ${order._id.$oid}</p>
-      <p>Customer: ${order.customer_name}</p>
-      <p>Dish: ${order.dish_id}</p>
-      <p>Status: ${order.status}</p>
+      <img class="dishImg2" src=${order.imageUrl} alt="Error 404"/>
+      <p><span>Customer Name:</span>&nbsp&nbsp<span>${sessionStorage.getItem("Name")}</span></p>
+      <p><span>Order Id:</span>&nbsp&nbsp<span>${order._id.$oid}</span></p>
+      <p><span>User Id:</span>&nbsp&nbsp<span>${order.user_id}</span></p>
+      <p><span>Menu Id: </span>&nbsp&nbsp<span>${order.menu_id}}</span></p>
+      <p><span>Status:</span>&nbsp&nbsp<span>${order.status}</span></p>
     `;
     orderContainer.appendChild(orderElement);
   });

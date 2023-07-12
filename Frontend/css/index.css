@@ -21,7 +21,7 @@ body {
 }
 
 #order-container {
-    width: 90%;
+    width: 75%;
     margin: auto;
     margin-top: 40px;
     display: flex;
@@ -151,4 +151,33 @@ body {
     font-size: 18px;
     font-weight: bold;
     color: #423f52;
+}
+
+.order-item-container{
+    border-radius: 10%;
+    border: 1px solid grey;
+    width: 27%;
+    text-align: center;
+    padding: 10px;
+    margin: auto;
+}
+
+.order-item-container span:nth-child(1){
+    font-size: 18px;
+    text-align: start;
+    width: 60%;
+    font-weight: bolder;
+    margin-top: 5px;
+}
+
+.order-item-container p{
+    border-bottom: 1px solid green;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.dishImg2{
+    width: 100%;
+    border-radius: 10%;
 }

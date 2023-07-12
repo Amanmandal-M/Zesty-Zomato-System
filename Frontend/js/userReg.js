@@ -178,6 +178,7 @@ const loginSection = async () => {
 
     sessionStorage.setItem("Token", apiResponse.Token);
     sessionStorage.setItem("Name", data.name);
+    sessionStorage.setItem("UserID", data._id.$oid);
     
 
     if (fetchingUrl.status == 201) {
