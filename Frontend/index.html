@@ -19,11 +19,12 @@
 </head>
 <body>
     <nav class="navbar">
-        <a class="navbar-brand" href="#" >Zesty Zomato Restaurant</a>
+        <a class="navbar-brand" href="#" >Zesty Zomato</a>
         <div class="navbar-links">
             <span class="login-button" id="logout"><!-- Logout --></span>
             <span class="login-button" id="names"><!-- User Name --></span>
             <button class="login-button" onclick="userLogin()" id="nameSpace">Login / Sign Up</button>
+            <button class="login-button" id="orders" onclick="Orders()">Orders</button>
             <button class="login-button" onclick="adminLogin()">Admin</button>
         </div>
     </nav>
@@ -38,9 +39,6 @@
         Please wait Loading...
         It takes few minute...
     </div>
-
-    <h2 class="menuHeader" id="orderHeader"></h2>
-    <div id="order-container"></div>
 
     <script src="./js/index.js"></script>
 </body>

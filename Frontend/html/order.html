@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zesty Zomato | Orders</title>
+
+    <!------------------ Favicon  ------------------>
+    <link rel="shortcut icon" href="https://url-shortener-857u.onrender.com/a7sTOapNP" type="image/x-icon">
+    
+    <!------------------ Styles  ------------------>
+    <link rel="stylesheet" type="text/css" href="../css/order.css">
+    
+    <!------------------ Box Icons  ------------------>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+        
+    <!------------------ SweetAlert JS  ------------------>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+    <!-- Nav Bar -->
+    <nav class="navbar">
+        <a class="navbar-brand" href="#" >Zesty Zomato</a>
+        <div class="navbar-links">
+            <span class="login-button" id="logout"><!-- Logout --></span>
+            <span class="login-button" id="names"><!-- User Name --></span>
+            <button class="login-button" onclick="userLogin()" id="nameSpace">Login / Sign Up</button>
+            <button class="login-button" onclick="adminLogin()">Admin</button>
+        </div>
+    </nav>
+    
+    <h2 class="menuHeader" id="orderHeader"></h2>
+    <div id="order-container"></div>
+     
+</body>
+</html>
+<script src="../js/order.js"></script>

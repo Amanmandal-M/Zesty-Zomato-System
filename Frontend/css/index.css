@@ -112,7 +112,7 @@ body {
     margin-top: 15px;
     cursor: pointer;
     padding: 8px;
-    width: 150px;
+    width: auto;
     border: none;
     background-color: rgb(6, 172, 237);
     font-size: 17px;

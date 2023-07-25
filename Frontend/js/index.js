@@ -14,7 +14,6 @@ const user_name = sessionStorage.getItem("Name");
 const nameContainer = document.getElementById("nameSpace");
 const logOutContainer = document.getElementById("logout");
 const namesContainer = document.getElementById("names");
-const orderHeader = document.getElementById("orderHeader");
 const menuContainer = document.getElementById("menu-container");
 const loader = document.getElementById("loader");
 const loader2 = document.getElementById("loader2");
@@ -35,6 +34,14 @@ function adminLogin() {
   window.location.href = "./html/adminDashboard.html";
 }
 
+function Orders(){
+  if(token){
+    window.location.href = "./html/order.html"
+  }else{
+    return showAlert("warning")
+  }
+}
+
 logOutContainer.addEventListener("click", (e) => {
   sessionStorage.removeItem("Token");
   sessionStorage.removeItem("Name");
@@ -50,12 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loader2.style.display = "block";
 
   fetchMenu();
-
-  // Fetch orders
-  if (token) {
-    orderHeader.textContent = "Orders";
-    fetchOrders();
-  }
 });
 
 async function fetchMenu() {
@@ -117,6 +118,16 @@ async function addToOrder(dishId) {
       }),
     });
     const result = await response.json();
+    console.log(result)
+
+    if(response.status == 404){
+      if(result.error == "Out of Stock"){
+        return showAlert("error", `Oops! \n ${result.message}`)
+      }else{
+        return showAlert("error", `Oops! \n ${result.message}`)
+      }
+    }
+
     fetchMenu();
     showAlert("success", "Order placed successfully!");
   } catch (error) {
@@ -124,41 +135,19 @@ async function addToOrder(dishId) {
   }
 }
 
-async function fetchOrders() {
-  try {
-    const response = await fetch(orderUrl);
-    const orders = await response.json();
-    displayOrders(JSON.parse(orders));
-  } catch (error) {
-    showAlert("error", "HTTP ERROR");
-  }
-}
-
-function displayOrders(orders) {
-  const orderContainer = document.getElementById("order-container");
-  orderContainer.innerHTML = "";
-  orders.forEach((order) => {
-    const orderElement = document.createElement("div");
-    orderElement.className = "order-item-container";
-    orderElement.innerHTML = `
-      <img class="dishImg2" src=${order.imageUrl} alt="Error 404"/>
-      <p><span>Customer Name:</span>&nbsp&nbsp<span>${sessionStorage.getItem("Name")}</span></p>
-      <p><span>Order Id:</span>&nbsp&nbsp<span>${order._id.$oid}</span></p>
-      <p><span>User Id:</span>&nbsp&nbsp<span>${order.user_id}</span></p>
-      <p><span>Menu Id: </span>&nbsp&nbsp<span>${order.menu_id}}</span></p>
-      <p><span>Status:</span>&nbsp&nbsp<span>${order.status}</span></p>
-    `;
-    orderContainer.appendChild(orderElement);
-  });
-}
 
 // Showing Alert
 function showAlert(type, message) {
+  const title = type === "success" ? "Success" : type === "error" ? "Error" : "Login First";
+  const icon = type === "success" ? "success" : type === "error" ? "error" : "warning";
+
   swal.fire({
-    title: type === "success" ? "Success" : "Error",
+    title: title,
     text: message,
-    icon: type,
+    icon: icon,
+    width: "auto",
     button: "OK",
+    timer:3000,
     didClose: () => {
       fetchOrders();
     },
