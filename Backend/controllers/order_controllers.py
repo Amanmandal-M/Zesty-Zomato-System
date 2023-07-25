@@ -18,10 +18,10 @@ def take_order():
             dish_info = menuCollection.find_one({"_id": ObjectId(dish_id)})
             if dish_info:
                 if not dish_info["available"]:
-                    return jsonify({"message": f"{dish_info['name']} is not available. Order cannot be processed."}), 404
+                    return jsonify({"message": f"{dish_info['name']} is not available. Order cannot be processed.","error":"Not available"})
 
                 if dish_info["quantity"] <= 0:
-                    return jsonify({"message": f"{dish_info['name']} is out of stock. Order cannot be processed.","error":"Out of Stock"}), 404
+                    return jsonify({"message": f"{dish_info['name']} is out of stock. Order cannot be processed.","error":"Out of Stock"}),404
 
                 order = {
                     "customer_name": dish_info['name'],
