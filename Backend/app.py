@@ -6,6 +6,8 @@ from flask_cors import CORS
 from routes.menu_routes import menu_router
 from routes.user_routes import user_router
 from routes.order_routes import order_router
+from routes.admin_routes import admin_router
+
 
 
 app = Flask(__name__)
@@ -24,6 +26,8 @@ def default_routes():
 app.register_blueprint(user_router, url_prefix='/user')
 app.register_blueprint(menu_router, url_prefix='/menu-list')
 app.register_blueprint(order_router, url_prefix='/order')
+app.register_blueprint(admin_router, url_prefix='/admin')
+
 
 
 if __name__ == '__main__':
