@@ -10,13 +10,16 @@
     
     <!------------------ Styles  ------------------>
     <link rel="stylesheet" href="../css/adminDashboard.css">
+
+    <!------------------ SweetAlert JS  ------------------>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body>
+<body onload="loadAdmin()">
     <nav class="navbar">
-        <a class="navbar-brand" href="../index.html" >Zesty Zomato | Admin </a>
+        <a class="navbar-brand" href="../index.html">Zesty Zomato | Admin</a>
         <div class="navbar-links">
-            <button class="login-button" onclick="home()" id="nameSpace">Home</button>
-            <button class="login-button" onclick="userLogin()" id="nameSpace">User Login</button>
+            <button class="login-button" onclick="home()">Home</button>
+            <button class="login-button" onclick="userLogin()">User Login</button>
         </div>
     </nav>
 </body>
