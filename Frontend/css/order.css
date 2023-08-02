@@ -1,3 +1,12 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
 .navbar {
     background-color: #d3cdcd93;
     padding: 10px;
@@ -8,7 +17,6 @@
 
 .navbar-brand {
     font-size: 20px;
-    font-weight: bold;
     text-decoration: none;
     color: blue;
 }
@@ -17,4 +25,21 @@
     display: flex;
     justify-content: space-around;
     gap: 10px;
+}
+
+.login-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#logout{
+    background-color: transparent;
+}
+#names{
+    background-color: transparent;
 }

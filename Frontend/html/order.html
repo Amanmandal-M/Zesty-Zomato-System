@@ -19,20 +19,20 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-
     <!-- Nav Bar -->
     <nav class="navbar">
         <a class="navbar-brand" href="#" >Zesty Zomato</a>
         <div class="navbar-links">
-            <span class="login-button" id="logout"><!-- Logout --></span>
-            <span class="login-button" id="names"><!-- User Name --></span>
+            <button class="login-button" onclick="home()">Home</button>
             <button class="login-button" onclick="userLogin()" id="nameSpace">Login / Sign Up</button>
             <button class="login-button" onclick="adminLogin()">Admin</button>
+            <span class="login-button" id="names"><!-- User Name --></span>
+            <span class="login-button" id="logout"><!-- Logout --></span>
         </div>
     </nav>
     
-    <h2 class="menuHeader" id="orderHeader"></h2>
-    <div id="order-container"></div>
+    <!-- <h2 class="menuHeader" id="orderHeader"></h2>
+    <div id="order-container"></div> -->
      
 </body>
 </html>

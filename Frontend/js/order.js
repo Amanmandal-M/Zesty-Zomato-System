@@ -29,7 +29,7 @@ function userLogin() {
 }
 
 function adminLogin() {
-  window.location.href = "./html/adminDashboard.html";
+  window.location.href = "../html/adminDashboard.html";
 }
 
 logOutContainer.addEventListener("click", (e) => {
@@ -38,7 +38,7 @@ logOutContainer.addEventListener("click", (e) => {
   logOutContainer.textContent = "";
   logOutContainer.style.backgroundColor = "transparent";
   nameContainer.textContent = "User Login";
-  window.location.reload();
+  window.location.href="../index.html";
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -98,7 +98,7 @@ function showAlert(type, message) {
       icon: icon,
       width: "auto",
       button: "OK",
-      timer: 3000,
+      timer: 1000,
       didClose: () => {
         window.location.href = "../html/userReg.html";
       },
