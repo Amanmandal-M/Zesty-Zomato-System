@@ -50,7 +50,9 @@ def take_order():
 # Description: Returns all orders
 def all_orders():
     try:
-        orders = list(orderCollection.find())
+        data = request.get_json()
+        user_id = data.get('user_id')
+        orders = list(orderCollection.find({"user_id": user_id}))
         serialized_orders = json_util.dumps(orders)
         return jsonify(serialized_orders), 200
     except Exception as e:
