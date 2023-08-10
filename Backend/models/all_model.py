@@ -18,7 +18,7 @@ menu_schema = {
     "dish_id": str,
     "name": str,
     "price": float,
-    "available": str,
+    "available": bool,
     "quantity": int
 }
 
