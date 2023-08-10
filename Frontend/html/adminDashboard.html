@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zesty Zomato | Admin Dashboard</title>
-
+    
     <!------------------ Favicon  ------------------>
     <link rel="shortcut icon" href="https://url-shortener-857u.onrender.com/a7sTOapNP" type="image/x-icon">
     
-    <!------------------ Styles  ------------------>
+    <!------------------ Custom CSS  ------------------>
     <link rel="stylesheet" href="../css/adminDashboard.css">
 
+    <!------------------ Box Icons  ------------------>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+        
     <!------------------ SweetAlert JS  ------------------>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -22,10 +26,37 @@
             <button class="login-button" onclick="userLogin()">User Login</button>
         </div>
     </nav>
+    
+    <div class="container">
+        <div class="input-section">
+            <input type="password" id="secretKeyInput" placeholder="Enter Admin Secret Key">
+            <button class="login-button" onclick="submitSecretKey()">Submit</button>
+        </div>
 
-    <div>
-        welcome
+        <div class="admin-functionalities" id="adminFunctionalities">
+            <div class="post-form">
+                <h2>Add Food Item</h2>
+                <form id="addForm">
+                    <input type="text" id="imageUrl" placeholder="Image URL" required>
+                    <input type="text" id="dishId" placeholder="Dish ID" required>
+                    <input type="text" id="name" placeholder="Name" required>
+                    <input type="number" id="price" placeholder="Price" step="0.01" required>
+                    <select id="available" required>
+                        <option value="" disabled>Select Availability</option>
+                        <option value="Available">Available</option>
+                        <option value="Not Available">Not Available</option>
+                    </select>
+                    <input type="number" id="quantity" placeholder="Quantity" required>
+                    <button class="login-button" type="submit">Add Item</button>
+                </form>
+            </div>
+
+            <div class="item-list" id="itemList">
+                <!-- Items will be dynamically generated here -->
+            </div>
+        </div>
     </div>
+    
+    <script src="../js/adminDashboard.js"></script>
 </body>
 </html>
-<script src="../js/adminDashboard.js"></script>
