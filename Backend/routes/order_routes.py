@@ -10,7 +10,7 @@ order_router = Blueprint('order', __name__)
 # Route: All Orders
 # Method: GET
 # Description: Get all orders
-order_router.route('/', methods=['GET'])(all_orders)
+order_router.route('/', methods=['POST'])(all_orders)
 
 
 # Route: Take Order
