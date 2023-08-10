@@ -17,7 +17,7 @@ menu_schema = {
     "imageUrl": str,
     "dish_id": str,
     "name": str,
-    "price": float,
+    "price": int,
     "available": bool,
     "quantity": int
 }
